@@ -298,6 +298,68 @@ divison：级别，如Ⅱ
   }
   ```
 
+- RESPONSE CLASSES
+
+  MatchDto
+  
+  | NAME     | DATA TYPE   | DESCRIPTION     |
+  | :------- | :---------- | :-------------- |
+  | info     | InfoDto     | Match info.     |
+  | metadata | MetadataDto | Match metadata. |
+  
+  InfoDto
+  
+  | game_datetime  | long                 | Unix timestamp.                                      |
+  | -------------- | -------------------- | ---------------------------------------------------- |
+  | participants   | List[ParticipantDto] | Participants.                                        |
+  | tft_set_number | int                  | Teamfight Tactics set number.                        |
+  | game_length    | float                | Game length in seconds.                              |
+  | queue_id       | int                  | Please refer to the League of Legends documentation. |
+  | game_version   | string               | Game client version.                                 |
+  
+  ParticipantDto
+  
+  | NAME                    | DATA TYPE      | DESCRIPTION                                                  |
+  | :---------------------- | :------------- | :----------------------------------------------------------- |
+  | placement               | int            | Participant placement upon elimination.                      |
+  | level                   | int            | Participant Little Legend level. Note: This is not the number of active units. |
+  | last_round              | int            | The round the participant was eliminated in. Note: If the player was eliminated in stage 2-1 their last_round would be 5. |
+  | time_eliminated         | float          | The number of seconds before the participant was eliminated. |
+  | companion               | CompanionDto   | Participant's companion.                                     |
+  | traits                  | List[TraitDto] | A complete list of traits for the participant's active units. |
+  | players_eliminated      | int            | Number of players the participant eliminated.                |
+  | puuid                   | string         | Encrypted PUUID.                                             |
+  | total_damage_to_players | int            | Damage the participant dealt to other players.               |
+  | units                   | List[UnitDto]  | A list of active units for the participant.                  |
+  | gold_left               | int            | Gold left after participant was eliminated.                  |
+  
+  TraitDto
+  
+  | NAME         | DATA TYPE | DESCRIPTION                        |
+  | :----------- | :-------- | :--------------------------------- |
+  | tier_total   | int       | Total tiers for the trait.         |
+  | name         | string    | Trait name.                        |
+  | tier_current | int       | Current active tier for the trait. |
+  | num_units    | int       | Number of units with this trait.   |
+  
+  UnitDto
+  
+  | NAME         | DATA TYPE | DESCRIPTION                                                  |
+  | :----------- | :-------- | :----------------------------------------------------------- |
+  | tier         | int       | Unit tier.                                                   |
+  | items        | List[int] | A list of the unit's items. Please refer to the Teamfight Tactics documentation for item ids. |
+  | character_id | string    | This field was introduced in patch 9.22 with data_version 2. |
+  | name         | string    | Unit name.                                                   |
+  | rarity       | int       | Unit rarity. This doesn't equate to the unit cost.           |
+  
+  MetadataDto
+  
+  | NAME         | DATA TYPE    | DESCRIPTION                             |
+  | :----------- | :----------- | :-------------------------------------- |
+  | data_version | string       | Match data version.                     |
+  | participants | List[string] | A list of encrypted participant PUUIDs. |
+  | match_id     | string       | Match id.                               |
+  
 - RESPONSE BODY
 
   ```
@@ -352,7 +414,7 @@ divison：级别，如Ⅱ
                           "num_units": 2
                       },
                       {
-                          "tier_total": 3,
+                          "tier_total": 3,S
                           "style": 1,
                           "name": "Set2_Ranger",
                           "tier_current": 1,
